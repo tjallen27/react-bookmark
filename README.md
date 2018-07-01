@@ -8,6 +8,7 @@ For this challenge, I decided on what the state would be and built the form arou
 * Rendering a list of items that are entered in the form
 
 ### What I would do if I had more time...
+* Fix URL validation
 * Edit list items on click
 * Fix the removeItem method
 * Put the styling in a separate Component

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ListItems from './Components/ListItems';
-
+import SimpleReactValidator from 'simple-react-validator';
 // Styling
 const appStyles = {
   fontWeight: '300',
@@ -43,37 +43,25 @@ export default class App extends Component {
     };
   }
 
+  componentWillMount() {
+    this.validator = new SimpleReactValidator();
+  }
+
   onChange = (e) => {
     // onChange method to set state value to target value
     this.setState({value: e.target.value});
   }
 
-
   onSubmit = (event) => {
     // Prevent page reload
     event.preventDefault()
-    // if input is empty, alert for input
-    if(!this.state.value){
-      alert('Please enter a value');
-      this.setState({
-        value: '',
-        url: ''
-      });
-    // alert if input doesn't start with 'www.'
-    } else if (!this.state.value.startsWith("www")){
-      alert('Please start the URL with \'www.\'');
-      this.setState({
-        value: '',
-        url: ''
-      });
-    // otherwise, set the state and append item to items array
-    } else {
-      this.setState({
-        value: '',
-        url: 'https://' + this.state.value,
-        items: [...this.state.items, this.state.value]
-      });
-    }
+    // if(this.validator.url.allValid()){
+    this.setState({
+      value: '',
+      url: 'https://' + this.state.value,
+      items: [...this.state.items, this.state.value]
+    });
+  // }
   }
 
   removeItem(index) {
@@ -89,16 +77,20 @@ export default class App extends Component {
   render() {
     return (
       <div style={appStyles} className="App">
+
         <header style={headerStyles} className="App-header">
           <h1 style={h1Styles} className="App-title">Feast It: Bookmark List</h1>
         </header>
 
         <form style={formStyles} onSubmit={this.onSubmit}>
-          <span>https:// </span><input  value={this.state.value} onChange={this.onChange} />
+          <label>Url:</label><br />
+          <span>https:// </span>
+          <input  value={this.state.value} onChange={this.onChange} />
           <button style={buttonStyles}>Save</button>
         </form>
 
         <ListItems items={this.state.items} url={this.state.url} removeItem={this.removeItem}/>
+        
       </div>
     );
   }
