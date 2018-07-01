@@ -29,7 +29,6 @@ const List = props => (
       key={index}
       style={listStyles}
       >
-        // set the href to the state url, passed through by props
         <a href={props.url} target="_blank">{item}</a>
         <button style={buttonStyles} type="button" className="close" onClick={props.removeItem}>x</button>
       </li>)
