@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import ListItems from './Components/ListItems';
-import './App.css';
+
+// Styling
 const appStyles = {
   fontWeight: '300',
   color: '#333'
 }
 const headerStyles = {
   marginTop: '0',
+  paddingLeft: '10px',
   color: 'white',
   background: 'rgba(100, 100, 245, 1)'
 };
@@ -21,11 +23,19 @@ const formStyles = {
   border: 'none',
   borderRadius: '5px'
 }
+const buttonStyles = {
+  margin: '10px',
+  padding: '10px',
+  outline: 'none',
+  border: 'none',
+  borderRadius: '5px'
+}
 
 
 export default class App extends Component {
   constructor(props){
     super(props);
+    // Set Initial state
     this.state = {
       value: '',
       url: '',
@@ -34,23 +44,29 @@ export default class App extends Component {
   }
 
   onChange = (e) => {
+    // onChange method to set state value to target value
     this.setState({value: e.target.value});
   }
 
+
   onSubmit = (event) => {
+    // Prevent page reload
     event.preventDefault()
+    // if input is empty, alert for input
     if(!this.state.value){
       alert('Please enter a value');
       this.setState({
         value: '',
         url: ''
       });
+    // alert if input doesn't start with 'www.'
     } else if (!this.state.value.startsWith("www")){
       alert('Please start the URL with \'www.\'');
       this.setState({
         value: '',
         url: ''
       });
+    // otherwise, set the state and append item to items array
     } else {
       this.setState({
         value: '',
@@ -62,8 +78,11 @@ export default class App extends Component {
 
   removeItem(index) {
     console.log('remove item')
+    // variable storing current state items
     var items = this.state.items;
+    // remove current item
     items.splice(index, 1)
+    // reset state to current item array
     this.setState({items})
   }
 
@@ -76,7 +95,7 @@ export default class App extends Component {
 
         <form style={formStyles} onSubmit={this.onSubmit}>
           <span>https:// </span><input  value={this.state.value} onChange={this.onChange} />
-          <button style={formStyles}>Save</button>
+          <button style={buttonStyles}>Save</button>
         </form>
 
         <ListItems items={this.state.items} url={this.state.url} removeItem={this.removeItem}/>
