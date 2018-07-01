@@ -7,6 +7,7 @@ export default class App extends Component {
     super(props);
     this.state = {
       value: '',
+      url: '',
       items: []
     };
   }
@@ -19,11 +20,12 @@ export default class App extends Component {
     event.preventDefault()
     if(!this.state.value){
       alert('Please enter a value');
-    } else if (!this.state.value.startsWith("https") && (!this.state.value.startsWith("http"))){
-      alert('Please start the URL with \'http or https\'');
+    } else if (!this.state.value.startsWith("www")){
+      alert('Please start the URL with \'www.\'');
     } else {
       this.setState({
         value: '',
+        url: this.state.value,
         items: [...this.state.items, this.state.value]
       });
     }
@@ -48,7 +50,7 @@ export default class App extends Component {
           <span>https://</span><input value={this.state.value} onChange={this.onChange} />
           <button>Save</button>
         </form>
-        <ListItems items={this.state.items} removeItem={this.removeItem}/>
+        <ListItems items={this.state.items} url={this.state.url} removeItem={this.removeItem}/>
       </div>
     );
   }
