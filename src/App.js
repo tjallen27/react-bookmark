@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ListItems from './Components/ListItems';
 import logo from './logo.svg';
 import './App.css';
 
@@ -34,7 +35,7 @@ export default class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
 
-        <form>
+        <form onSubmit={this.onSubmit}>
           <input value={this.state.value} onChange={this.onChange} />
           <button>Submit</button>
         </form>
