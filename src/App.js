@@ -10,6 +10,7 @@ class App extends Component {
       items: []
     };
   }
+
   render() {
     return (
       <div className="App">
@@ -20,6 +21,11 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
+
+        <form>
+          <input value={this.state.value} onChange={this.onChange} />
+          <button>Submit</button>
+        </form>
       </div>
     );
   }
