@@ -7,6 +7,9 @@ For this challenge, I decided on what the state would be and built the form arou
 * Using props to form the ListItems component
 * Rendering a list of items that are entered in the form
 
+### What didn't go well...
+* Validation: I initially set a condtional statement with alerts based on what the input starts and ends with, but tried to change to use simple-react-validation which I couldn't get to work
+
 ### What I would do if I had more time...
 * Fix URL validation
 * Edit list items on click
