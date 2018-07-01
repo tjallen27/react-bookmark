@@ -75,7 +75,7 @@ export default class App extends Component {
         </header>
 
         <form style={formStyles} onSubmit={this.onSubmit}>
-          <span>https:// </span><input value={this.state.value} onChange={this.onChange} />
+          <span>https:// </span><input  value={this.state.value} onChange={this.onChange} />
           <button style={formStyles}>Save</button>
         </form>
 
