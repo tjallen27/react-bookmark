@@ -19,8 +19,8 @@ export default class App extends Component {
   onSubmit = (event) => {
     event.preventDefault()
     this.setState({
-      term: '',
-      items: [...this.state.items, this.state.term]
+      value: '',
+      items: [...this.state.items, this.state.value]
     });
   }
 
@@ -39,6 +39,7 @@ export default class App extends Component {
           <input value={this.state.value} onChange={this.onChange} />
           <button>Submit</button>
         </form>
+        <ListItems items={this.state.items} />
       </div>
     );
   }
