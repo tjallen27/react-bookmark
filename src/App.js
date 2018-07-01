@@ -20,20 +20,30 @@ export default class App extends Component {
     event.preventDefault()
     if(!this.state.value){
       alert('Please enter a value');
+      this.setState({
+        value: '',
+        url: ''
+      });
     } else if (!this.state.value.startsWith("www")){
       alert('Please start the URL with \'www.\'');
+      this.setState({
+        value: '',
+        url: ''
+      });
     } else {
       this.setState({
         value: '',
-        url: this.state.value,
+        url: 'https://' + this.state.value,
         items: [...this.state.items, this.state.value]
       });
     }
   }
 
-  removeItem() {
-    var index = parseInt(this.props.index);
-    this.props.removeItem(index);
+  removeItem(index) {
+    console.log(index)
+    var items = this.state.items;
+    items.splice(index, 1)
+    this.setState({items})
   }
 
   render() {
@@ -42,9 +52,6 @@ export default class App extends Component {
         <header className="App-header">
           <h1 className="App-title">Feast It: Bookmark List</h1>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
 
         <form onSubmit={this.onSubmit}>
           <span>https://</span><input value={this.state.value} onChange={this.onChange} />
