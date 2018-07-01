@@ -11,22 +11,28 @@ export default class App extends Component {
     };
   }
 
-  onChange = (event) => {
-    this.setState({value: event.target.value});
+  onChange = (e) => {
+    this.setState({value: e.target.value});
   }
 
   onSubmit = (event) => {
     event.preventDefault()
-    this.setState({
-      value: '',
-      items: [...this.state.items, this.state.value]
-    });
+    if(!this.state.value){
+      alert('Please enter a value');
+    } else if (!this.state.value.startsWith("https") && (!this.state.value.startsWith("http"))){
+      alert('Please start the URL with \'http or https\'');
+    } else {
+      this.setState({
+        value: '',
+        items: [...this.state.items, this.state.value]
+      });
+    }
   }
 
-  removeItem (itemIndex) {
-   this.state.items.splice(itemIndex, 1);
-   this.setState({items: this.state.items});
- }
+  removeItem() {
+    var index = parseInt(this.props.index);
+    this.props.removeItem(index);
+  }
 
   render() {
     return (
@@ -39,7 +45,7 @@ export default class App extends Component {
         </p>
 
         <form onSubmit={this.onSubmit}>
-          <input value={this.state.value} onChange={this.onChange} />
+          <span>https://</span><input value={this.state.value} onChange={this.onChange} />
           <button>Save</button>
         </form>
         <ListItems items={this.state.items} removeItem={this.removeItem}/>
