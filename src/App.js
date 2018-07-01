@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ListItems from './Components/ListItems';
-import logo from './logo.svg';
 import './App.css';
 
 export default class App extends Component {
@@ -24,12 +23,16 @@ export default class App extends Component {
     });
   }
 
+  removeItem (itemIndex) {
+   this.state.items.splice(itemIndex, 1);
+   this.setState({items: this.state.items});
+ }
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">Feast It: Bookmark List</h1>
         </header>
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
@@ -37,9 +40,9 @@ export default class App extends Component {
 
         <form onSubmit={this.onSubmit}>
           <input value={this.state.value} onChange={this.onChange} />
-          <button>Submit</button>
+          <button>Save</button>
         </form>
-        <ListItems items={this.state.items} />
+        <ListItems items={this.state.items} removeItem={this.removeItem}/>
       </div>
     );
   }
