@@ -2,13 +2,25 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-class App extends Component {
+export default class App extends Component {
   constructor(props){
     super(props);
     this.state = {
       value: '',
       items: []
     };
+  }
+
+  onChange = (event) => {
+    this.setState({value: event.target.value});
+  }
+
+  onSubmit = (event) => {
+    event.preventDefault()
+    this.setState({
+      term: '',
+      items: [...this.state.items, this.state.term]
+    });
   }
 
   render() {
@@ -30,5 +42,3 @@ class App extends Component {
     );
   }
 }
-
-export default App;
