@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import ListItems from './Components/ListItems';
+import ErrorBoundary from './Components/ErrorBoundary';
 import SimpleReactValidator from 'simple-react-validator';
 // Styling
-const appStyles = {
-  fontWeight: '300',
-  color: '#333'
-}
 const headerStyles = {
   marginTop: '0',
   paddingLeft: '10px',
@@ -56,6 +53,7 @@ export default class App extends Component {
   onSubmit = (event) => {
     // Prevent page reload
     event.preventDefault()
+    if (this.state.value)
     this.setState({
       value: '',
       url: 'https://' + this.state.value,
@@ -73,23 +71,27 @@ export default class App extends Component {
     this.setState({items})
   }
 
+  componentWillMount(nextProps, nextState){
+    localStorage.setItem("listItems", "something");
+  }
+
   render() {
     return (
-      <div style={appStyles} className="App">
-
+      <div className="App">
         <header style={headerStyles} className="App-header">
           <h1 style={h1Styles} className="App-title">Feast It: Bookmark List</h1>
         </header>
 
-        <form style={formStyles} onSubmit={this.onSubmit}>
-          <label>Url:</label><br />
-          <span>https:// </span>
-          <input  value={this.state.value} onChange={this.onChange} />
-          <button style={buttonStyles}>Save</button>
-        </form>
+        <ErrorBoundary>
+          <form style={formStyles} onSubmit={this.onSubmit}>
+            <label>Url:</label>
+            <span>https:// </span>
+            <input  value={this.state.value} onChange={this.onChange} />
+            <button style={buttonStyles}>Save</button>
+          </form>
+        </ErrorBoundary>
 
-        <ListItems items={this.state.items} url={this.state.url} removeItem={this.removeItem}/>
-
+        <ListItems items={this.state.items} url={this.state.url} removeItem={this.removeItem} />
       </div>
     );
   }
