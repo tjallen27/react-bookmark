@@ -28,16 +28,18 @@ const buttonStyles = {
   borderRadius: '5px'
 }
 
-
 export default class App extends Component {
   constructor(props){
     super(props);
-    // Set Initial state
-    this.state = {
-      value: '',
-      url: '',
-      items: []
-    };
+    // set variable as data from local storage
+    const storageData = JSON.parse(localStorage.getItem('listItems'));
+    // set initial state
+      this.state = {
+        value: '',
+        url: '',
+        // set items array as storage data variable
+        items: storageData
+      }
     this.removeItem = this.removeItem.bind(this);
   }
 
@@ -46,20 +48,26 @@ export default class App extends Component {
     this.setState({value: event.target.value});
   }
 
-  onSubmit = (event) => {
-    // Prevent page reload
-    event.preventDefault()
-    if (this.state.value)
-    this.setState({
-      isLoading: true,
-      value: '',
-      url: 'https://' + this.state.value,
-      items: [...this.state.items, this.state.value]
-    });
+  onSubmit = (event, index) => {
+    event.preventDefault();
+    // check input starts with 'www.'
+      if (!this.state.value.startsWith("www.")){
+        // set input the empty
+        this.setState({
+          value: ""
+        })
+        return alert('Please enter a value that sarts with "www."')
+      } else {
+      // otherwise add the new value to the current value array
+      this.setState({
+        value: '',
+        url: 'https://' + this.state.value,
+        items: [...this.state.items, this.state.value]
+      });
+    }
   }
 
   removeItem = (index) => {
-    console.log('remove item')
     // variable storing current state items
     const items = this.state.items;
     // remove current item
@@ -68,24 +76,20 @@ export default class App extends Component {
     this.setState({items})
   }
 
-  componentWillMount(){
-    localStorage.setItem('items', 'anotheritem')
-  }
   componentWillUpdate(nextProps, nextState){
     localStorage.setItem("listItems", JSON.stringify(nextState.items));
     localStorage.setItem("listValues", JSON.stringify(nextState.value));
   }
 
   render() {
+    <p>{localStorage.getItem("listItems")}</p>
     return (
       <div className="App">
         <header style={headerStyles} className="App-header">
           <h1 style={h1Styles} className="App-title">Feast It: Bookmark List</h1>
         </header>
 
-
           <form style={formStyles} onSubmit={this.onSubmit}>
-            <label>Url:</label>
             <span>https:// </span>
             <input  value={this.state.value} onChange={this.onChange} />
             <button style={buttonStyles}>Save</button>
