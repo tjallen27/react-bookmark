@@ -1,23 +1,18 @@
 import React, {Component} from 'react';
 
+// ErrorBoundary from React Docs
 export default class ErrorBoundary extends Component {
   constructor(props) {
     super(props);
-    this.state = { error: null, errorInfo: null };
+    this.state = { hasError: false };
   }
 
-  componentDidCatch(error, errorInfo) {
-      // Catch errors in any components below and re-render with error message
-      this.setState({
-        error: error,
-        errorInfo: errorInfo
-      })
-      // You can also log error messages to an error reporting service here
-    }
+  componentDidCatch(error, info) {
+    this.setState({ hasError: true });
+  }
 
   render() {
-    if (this.state.errorInfo) {
-      // You can render any custom fallback UI
+    if (this.state.hasError) {
       return <h1>Something went wrong.</h1>;
     }
     return this.props.children;

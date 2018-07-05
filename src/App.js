@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ListItems from './Components/ListItems';
 import ErrorBoundary from './Components/ErrorBoundary';
-import SimpleReactValidator from 'simple-react-validator';
+
 // Styling
 const headerStyles = {
   marginTop: '0',
@@ -41,10 +41,6 @@ export default class App extends Component {
     this.removeItem = this.removeItem.bind(this);
   }
 
-  componentWillMount() {
-    this.validator = new SimpleReactValidator();
-  }
-
   onChange = (event) => {
     // onChange method to set state value to target value
     this.setState({value: event.target.value});
@@ -55,6 +51,7 @@ export default class App extends Component {
     event.preventDefault()
     if (this.state.value)
     this.setState({
+      isLoading: true,
       value: '',
       url: 'https://' + this.state.value,
       items: [...this.state.items, this.state.value]
@@ -71,8 +68,12 @@ export default class App extends Component {
     this.setState({items})
   }
 
-  componentWillMount(nextProps, nextState){
-    localStorage.setItem("listItems", "something");
+  componentWillMount(){
+    localStorage.setItem('items', 'anotheritem')
+  }
+  componentWillUpdate(nextProps, nextState){
+    localStorage.setItem("listItems", JSON.stringify(nextState.items));
+    localStorage.setItem("listValues", JSON.stringify(nextState.value));
   }
 
   render() {
@@ -82,16 +83,17 @@ export default class App extends Component {
           <h1 style={h1Styles} className="App-title">Feast It: Bookmark List</h1>
         </header>
 
-        <ErrorBoundary>
+
           <form style={formStyles} onSubmit={this.onSubmit}>
             <label>Url:</label>
             <span>https:// </span>
             <input  value={this.state.value} onChange={this.onChange} />
             <button style={buttonStyles}>Save</button>
           </form>
-        </ErrorBoundary>
 
-        <ListItems items={this.state.items} url={this.state.url} removeItem={this.removeItem} />
+        <ErrorBoundary>
+          <ListItems items={this.state.items} url={this.state.url} removeItem={this.removeItem} />
+        </ErrorBoundary>
       </div>
     );
   }
