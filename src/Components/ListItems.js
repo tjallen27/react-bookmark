@@ -1,12 +1,6 @@
 import React from 'react';
 
 // Styles
-const formStyles = {
-  padding: '10px',
-  outline: 'none',
-  border: 'solid 1px #555',
-  borderRadius: '5px'
-}
 const listStyles = {
   listStyle: 'none'
 }

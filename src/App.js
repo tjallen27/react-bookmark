@@ -41,33 +41,32 @@ export default class App extends Component {
       url: '',
       items: []
     };
+    this.removeItem = this.removeItem.bind(this);
   }
 
   componentWillMount() {
     this.validator = new SimpleReactValidator();
   }
 
-  onChange = (e) => {
+  onChange = (event) => {
     // onChange method to set state value to target value
-    this.setState({value: e.target.value});
+    this.setState({value: event.target.value});
   }
 
   onSubmit = (event) => {
     // Prevent page reload
     event.preventDefault()
-    // if(this.validator.url.allValid()){
     this.setState({
       value: '',
       url: 'https://' + this.state.value,
       items: [...this.state.items, this.state.value]
     });
-  // }
   }
 
-  removeItem(index) {
+  removeItem = (index) => {
     console.log('remove item')
     // variable storing current state items
-    var items = this.state.items;
+    const items = this.state.items;
     // remove current item
     items.splice(index, 1)
     // reset state to current item array
@@ -90,7 +89,7 @@ export default class App extends Component {
         </form>
 
         <ListItems items={this.state.items} url={this.state.url} removeItem={this.removeItem}/>
-        
+
       </div>
     );
   }
