@@ -30,16 +30,15 @@ const buttonStyles = {
 export default class App extends Component {
   constructor(props){
     super(props);
+
     // set variable as data from local storage
     const storageData = JSON.parse(localStorage.getItem('listItems'));
-    console.log(storageData);
 
     // set initial state
       this.state = {
         value: '',
         url: '',
         // set items array as storage data variable
-        // bug: Page only loads if localstorage available
         items: storageData || []
       }
     this.removeItem = this.removeItem.bind(this);
@@ -81,11 +80,6 @@ export default class App extends Component {
   componentWillUpdate(nextProps, nextState){
     localStorage.setItem("listItems", JSON.stringify(nextState.items));
     localStorage.setItem("listValues", JSON.stringify(nextState.value));
-  }
-
-  componentWillMount(){
-    localStorage.setItem("listItems", JSON.stringify('Test Item'));
-    localStorage.setItem("listValues", JSON.stringify('Test Value'));
   }
 
   render() {
