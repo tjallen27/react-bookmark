@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ListItems from './Components/ListItems';
-import ErrorBoundary from './Components/ErrorBoundary';
 
 // Styling
 const headerStyles = {
@@ -32,7 +31,7 @@ export default class App extends Component {
   constructor(props){
     super(props);
     // set variable as data from local storage
-    let storageData = JSON.parse(localStorage.getItem('listItems'));
+    const storageData = JSON.parse(localStorage.getItem('listItems'));
     console.log(storageData);
 
     // set initial state
@@ -84,6 +83,11 @@ export default class App extends Component {
     localStorage.setItem("listValues", JSON.stringify(nextState.value));
   }
 
+  componentWillMount(){
+    localStorage.setItem("listItems", JSON.stringify('Test Item'));
+    localStorage.setItem("listValues", JSON.stringify('Test Value'));
+  }
+
   render() {
     return (
       <div className="App">
@@ -97,9 +101,7 @@ export default class App extends Component {
             <button style={buttonStyles}>Save</button>
           </form>
 
-        <ErrorBoundary>
           <ListItems items={this.state.items} url={this.state.url} removeItem={this.removeItem} />
-        </ErrorBoundary>
       </div>
     );
   }
