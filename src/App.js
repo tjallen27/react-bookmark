@@ -32,12 +32,15 @@ export default class App extends Component {
   constructor(props){
     super(props);
     // set variable as data from local storage
-    const storageData = JSON.parse(localStorage.getItem('listItems'));
+    let storageData = JSON.parse(localStorage.getItem('listItems'));
+    console.log(storageData);
+
     // set initial state
       this.state = {
         value: '',
         url: '',
         // set items array as storage data variable
+        // bug: Page only loads if localstorage available
         items: storageData
       }
     this.removeItem = this.removeItem.bind(this);
@@ -55,7 +58,7 @@ export default class App extends Component {
         // set input the empty
         this.setState({
           value: ""
-        })
+        });
         return alert('Please enter a value that sarts with "www."')
       } else {
       // otherwise add the new value to the current value array
@@ -71,9 +74,9 @@ export default class App extends Component {
     // variable storing current state items
     const items = this.state.items;
     // remove current item
-    items.splice(index, 1)
+    items.splice(index, 1);
     // reset state to current item array
-    this.setState({items})
+    this.setState({items});
   }
 
   componentWillUpdate(nextProps, nextState){
@@ -82,7 +85,6 @@ export default class App extends Component {
   }
 
   render() {
-    <p>{localStorage.getItem("listItems")}</p>
     return (
       <div className="App">
         <header style={headerStyles} className="App-header">
