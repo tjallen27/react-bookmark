@@ -40,7 +40,7 @@ export default class App extends Component {
         url: '',
         // set items array as storage data variable
         // bug: Page only loads if localstorage available
-        items: storageData
+        items: storageData || []
       }
     this.removeItem = this.removeItem.bind(this);
   }
